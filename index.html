@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* ===== ВСЕ СТИЛИ ЗДЕСЬ ===== */
+        /* ===== СТИЛИ ===== */
         * {
             margin: 0;
             padding: 0;
@@ -242,8 +242,9 @@
 
         .radio-group {
             display: flex;
-            gap: 30px;
+            gap: 40px;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         .radio-group label {
@@ -251,6 +252,7 @@
             align-items: center;
             gap: 8px;
             font-weight: 400;
+            margin-bottom: 0;
         }
 
         .btn {
@@ -272,24 +274,97 @@
         }
 
         /* Чат и контакты */
+        .chat-section {
+            text-align: center;
+        }
+
         .chat-link {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             background: #e1d3cb;
-            padding: 15px 30px;
+            padding: 18px 40px;
             border-radius: 60px;
             text-decoration: none;
             color: #3a2a21;
-            font-weight: 500;
-            margin: 20px 0;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin: 25px 0 40px;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .chat-link:hover {
+            background: #d4c0b5;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: #b58b70;
         }
 
         .contact-block {
             background: #efe6df;
-            padding: 25px;
-            border-radius: 30px;
-            display: inline-block;
+            padding: 35px;
+            border-radius: 40px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .contact-name {
+            font-size: 2.2rem;
+            font-family: 'Cormorant Garamond', serif;
+            color: #5a3f32;
+            margin-bottom: 10px;
+        }
+
+        .contact-role {
+            font-size: 1.1rem;
+            color: #7a5a4a;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .contact-phone {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #4a3a32;
+            text-decoration: none;
+            border-bottom: 2px dashed #b58b70;
+            padding-bottom: 5px;
+        }
+
+        .contact-phone:hover {
+            color: #876b55;
+        }
+
+        /* Блок про цветы */
+        .flowers-block {
+            background: linear-gradient(135deg, #f2e6df, #f9f0ea);
+            padding: 50px;
+            border-radius: 70px;
+            text-align: center;
+            margin: 60px 0;
+            border: 2px solid rgba(181, 139, 112, 0.2);
+        }
+
+        .flowers-title {
+            font-size: 2.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            color: #5a3f32;
+            margin-bottom: 20px;
+        }
+
+        .flowers-text {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #4a3a32;
+            line-height: 1.6;
+        }
+
+        .flowers-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.8;
         }
 
         /* Музыкальный плеер */
@@ -367,6 +442,12 @@
             .music-player { bottom: 20px; right: 20px; }
             .player-button { width: 50px; height: 50px; }
             .music-icon { font-size: 24px; }
+            .radio-group { gap: 20px; }
+            .flowers-block { padding: 30px 20px; }
+            .flowers-title { font-size: 2rem; }
+            .flowers-text { font-size: 1.1rem; }
+            .chat-link { padding: 15px 25px; font-size: 1rem; }
+            .contact-phone { font-size: 1.4rem; }
         }
     </style>
 </head>
@@ -374,7 +455,7 @@
 
     <!-- МУЗЫКАЛЬНЫЙ ПЛЕЕР -->
     <div class="music-player" id="musicPlayer">
-        <audio id="bgMusic" loop>
+        <audio id="bgMusic" loop autoplay playsinline>
             <source src="background-music.mp3" type="audio/mpeg">
             Ваш браузер не поддерживает аудио.
         </audio>
@@ -433,7 +514,6 @@
                 <div class="schedule-item"><span class="schedule-time">15:30</span><span>Сбор гостей, приветственный фуршет</span></div>
                 <div class="schedule-item"><span class="schedule-time">16:00</span><span>Выездная церемония</span></div>
                 <div class="schedule-item"><span class="schedule-time">17:00</span><span>Банкет</span></div>
-                <div class="schedule-item"><span class="schedule-time">19:00</span><span>Торт и танцы</span></div>
                 <div class="schedule-item"><span class="schedule-time">23:00</span><span>Завершение вечера</span></div>
             </div>
         </section>
@@ -450,42 +530,51 @@
             </div>
         </section>
 
-        <!-- ВАЖНОЕ -->
-        <section class="fade-up" style="background: #f0e7df; padding: 40px; border-radius: 60px;">
-            <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; text-align: center;">
-                <div style="flex:1; min-width: 250px;">
-                    <h3 style="font-size: 2rem;">🎁 Подарки</h3>
-                    <p>Самое главное — вы рядом. Но если хотите порадовать, будем рады конверту или бутылочке вина в нашу коллекцию.</p>
-                </div>
-                <div style="flex:1; min-width: 250px;">
-                    <h3 style="font-size: 2rem;">👤 Формат</h3>
-                    <p>Праздник только для взрослых. Пожалуйста, оставьте детей дома и отдохните полностью.</p>
-                </div>
-            </div>
+        <!-- БЛОК ПРО ЦВЕТЫ (вместо подарков) -->
+        <section class="fade-up flowers-block">
+            <div class="flowers-icon">🌿🌸</div>
+            <h3 class="flowers-title">О цветах</h3>
+            <p class="flowers-text">
+                Дорогие гости! У нас будет много живых цветов на празднике.<br>
+                Пожалуйста, не дарите букеты — мы не сможем забрать их с собой.<br>
+                <span style="font-size: 1.1rem; display: block; margin-top: 20px;">Лучший подарок для нас — ваши улыбки и хорошее настроение!</span>
+            </p>
         </section>
 
         <!-- ЧАТ И КОНТАКТЫ -->
-        <section class="fade-up" style="text-align: center;">
+        <section class="fade-up chat-section">
             <h2 class="section-title">Чат и контакты</h2>
-            <p>Присоединяйтесь к нашему Telegram-чату, чтобы быть на связи:</p>
-            <a href="#" class="chat-link">📱 telegram-чат Вадим & Полина</a>
-            <p style="margin: 30px 0 10px;">По любым вопросам — к нашей помощнице:</p>
+            <p style="font-size: 1.2rem;">Присоединяйтесь к нашему Telegram-чату, чтобы быть на связи:</p>
+            <a href="https://t.me/+97GMs6tI2bpjOTUy" class="chat-link" target="_blank">
+                📱 Вадим & Полина / Telegram-чат
+            </a>
+            
             <div class="contact-block">
-                <p style="font-size: 2rem; font-weight: 600;">Ольга</p>
-                <p>📞 +7 (912) 345-67-89</p>
-                <p>✉️ @olga_tales</p>
+                <div class="contact-name">Екатерина</div>
+                <div class="contact-role">организатор</div>
+                <p style="margin-bottom: 25px; font-size: 1.1rem;">
+                    Дорогие гости! Если у вас возникли вопросы, пожелания,<br>
+                    или вы подготовили творческие поздравления — свяжитесь с нашим организатором:
+                </p>
+                <a href="tel:+79630409212" class="contact-phone">8 (963) 040-92-12</a>
             </div>
         </section>
 
-        <!-- ФОРМА -->
+        <!-- ФОРМА ПОДТВЕРЖДЕНИЯ -->
         <section class="fade-up">
             <h2 class="section-title">Подтвердите присутствие</h2>
             <p style="text-align: center; margin-bottom: 30px;">Пожалуйста, ответьте до 01.06.2026</p>
 
             <form class="rsvp-form" id="rsvpForm">
+                <!-- Два отдельных поля для имен -->
                 <div class="form-group">
-                    <label>Ваши имена (и спутников, если будете парой) *</label>
-                    <input type="text" id="name" placeholder="Например: Вадим и Полина" required>
+                    <label>Ваше имя и фамилия *</label>
+                    <input type="text" id="name1" placeholder="Например: Вадим Петров" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Имя и фамилия вашей половинки (если идёте вдвоём)</label>
+                    <input type="text" id="name2" placeholder="Например: Полина Иванова">
                 </div>
 
                 <div class="form-group">
@@ -499,9 +588,8 @@
                 <div class="form-group">
                     <label>Предпочтение по горячему</label>
                     <select id="meal">
-                        <option>Мясное</option>
-                        <option>Рыбное</option>
-                        <option>Овощное/вегетарианское</option>
+                        <option>Курица</option>
+                        <option>Свинина</option>
                     </select>
                 </div>
 
@@ -511,7 +599,9 @@
                         <option>Красное вино</option>
                         <option>Белое вино</option>
                         <option>Шампанское</option>
-                        <option>Крепкое</option>
+                        <option>Водка</option>
+                        <option>Виски</option>
+                        <option>Коньяк</option>
                         <option>Не пью алкоголь</option>
                     </select>
                 </div>
@@ -532,7 +622,7 @@
     </div>
 
     <script>
-        // ===== ВЕСЬ JAVASCRIPT ЗДЕСЬ =====
+        // ===== СКРИПТЫ =====
         
         // 1. ТАЙМЕР
         const weddingDate = new Date(2026, 6, 3, 16, 0);
@@ -574,15 +664,32 @@
 
         fadeElements.forEach(el => observer.observe(el));
 
-        // 3. МУЗЫКАЛЬНЫЙ ПЛЕЕР
+        // 3. МУЗЫКАЛЬНЫЙ ПЛЕЕР (автовоспроизведение с обработкой ошибок)
         const audio = document.getElementById('bgMusic');
         const playBtn = document.getElementById('playPauseBtn');
         const musicStatus = document.getElementById('musicStatus');
         let isPlaying = false;
 
         if (audio) {
-            audio.load();
+            // Пытаемся включить музыку сразу
+            let playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        // Автовоспроизведение сработало
+                        isPlaying = true;
+                        musicStatus.textContent = 'Сейчас играет';
+                        playBtn.classList.add('playing');
+                    })
+                    .catch(error => {
+                        // Автовоспроизведение заблокировано браузером
+                        console.log('Автовоспроизведение не сработало, ждём клик');
+                        musicStatus.textContent = 'Нажмите, чтобы включить музыку';
+                    });
+            }
 
+            // Обработчик клика по кнопке
             playBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 
@@ -598,7 +705,7 @@
                         })
                         .catch(error => {
                             console.log('Ошибка:', error);
-                            musicStatus.textContent = 'Нажмите ещё раз';
+                            musicStatus.textContent = 'Ошибка воспроизведения';
                         });
                 }
                 isPlaying = !isPlaying;
@@ -611,7 +718,7 @@
             });
         }
 
-        // 4. ОТПРАВКА ФОРМЫ
+        // 4. ОТПРАВКА ФОРМЫ В ГУГЛ-ТАБЛИЦУ
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzVJkHZ3WUuLGjZJ9zQ_xUJXa6nPxL05fS2D3hzGj3p8XuTtD0xFjNCqcgRzcruKol2Va4/exec';
 
         document.getElementById('rsvpForm')?.addEventListener('submit', async function(e) {
@@ -619,13 +726,18 @@
             const statusEl = document.getElementById('formStatus');
             const submitBtn = document.getElementById('submitBtn');
             
-            const name = document.getElementById('name').value.trim();
-            if (!name) {
+            const name1 = document.getElementById('name1').value.trim();
+            const name2 = document.getElementById('name2').value.trim();
+            
+            if (!name1) {
                 statusEl.style.color = 'red';
-                statusEl.innerText = 'Пожалуйста, введите имена';
+                statusEl.innerText = 'Пожалуйста, введите ваше имя';
                 return;
             }
 
+            // Объединяем имена для отправки
+            const fullName = name2 ? `${name1} и ${name2}` : name1;
+            
             const attendance = document.querySelector('input[name="attendance"]:checked').value;
             const meal = document.getElementById('meal').value;
             const alcohol = document.getElementById('alcohol').value;
@@ -643,7 +755,7 @@
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: new URLSearchParams({
                         sheetName: 'Лист5',
-                        name: name,
+                        name: fullName,
                         attendance: attendance,
                         meal: meal,
                         alcohol: alcohol,
