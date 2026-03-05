@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вадим и Полина | Свадьба 03.07.2026</title>
+    <!-- Подключаем CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- АУДИО ПЛЕЕР (круглая кнопка) -->
+    <div class="music-player" id="musicPlayer">
+        <audio id="bgMusic" loop>
+            <source src="background-music.mp3" type="audio/mpeg">
+            Ваш браузер не поддерживает аудио.
+        </audio>
+        <div class="player-button" id="playPauseBtn">
+            <span class="music-icon">♪</span>
+        </div>
+        <div class="player-status" id="musicStatus">Музыка выключена</div>
+    </div>
+
+    <!-- ГЕРОЙ -->
+    <section class="hero">
+        <div class="hero-overlay">
+            <h1>ВАДИМ & ПОЛИНА</h1>
+            <div class="date">03.07.2026</div>
+            <div class="timer" id="timer">
+                <div class="timer-item"><span id="days">00</span><span>дней</span></div>
+                <div class="timer-item"><span id="hours">00</span><span>часов</span></div>
+                <div class="timer-item"><span id="minutes">00</span><span>минут</span></div>
+                <div class="timer-item"><span id="seconds">00</span><span>секунд</span></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- ПРИГЛАШЕНИЕ (анимация) -->
+        <section class="fade-up">
+            <h2 class="section-title">Дорогие гости!</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto; font-size: 1.3rem;">
+                Мы будем счастливы разделить с вами этот день — день, когда мы станем семьёй.<br>
+                Приезжайте разделить нашу радость и тепло!
+            </p>
+        </section>
+
+        <!-- МЕСТО И ВРЕМЯ (анимация) -->
+        <section class="fade-up">
+            <h2 class="section-title">Место и время</h2>
+            <div class="info-cards">
+                <div class="card">
+                    <h3>📍 Церемония</h3>
+                    <p><strong>16:00</strong><br>Выездная регистрация</p>
+                    <p>Загородный отель «Талес»<br>Ясная ул., 1, посёлок Таватуй</p>
+                    <p class="small-note" style="margin-top: 15px;"><a href="https://yandex.ru/maps/?text=Ясная ул., 1, посёлок Таватуй" target="_blank">Открыть карту →</a></p>
+                </div>
+                <div class="card">
+                    <h3>🥂 Банкет</h3>
+                    <p><strong>17:00</strong><br>Банкетный зал отеля «Талес»</p>
+                    <p>Сбор гостей в <strong>15:30</strong> (welcome-зона)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ТАЙМИНГ ДНЯ (анимация) -->
+        <section class="fade-up">
+            <h2 class="section-title">Программа дня</h2>
+            <div class="schedule">
+                <div class="schedule-item"><span class="schedule-time">15:30</span><span>Сбор гостей, приветственный фуршет</span></div>
+                <div class="schedule-item"><span class="schedule-time">16:00</span><span>Выездная церемония</span></div>
+                <div class="schedule-item"><span class="schedule-time">17:00</span><span>Банкет</span></div>
+                <div class="schedule-item"><span class="schedule-time">19:00</span><span>Торт и танцы</span></div>
+                <div class="schedule-item"><span class="schedule-time">23:00</span><span>Завершение вечера</span></div>
+            </div>
+        </section>
+
+        <!-- ДРЕСС-КОД (анимация) -->
+        <section class="fade-up">
+            <h2 class="section-title">Дресс-код</h2>
+            <p style="text-align: center;">Поддержите цветовую гамму нашей свадьбы — природные, уральские оттенки:</p>
+            <div class="color-dots">
+                <div class="color-item"><div class="dot" style="background:#47634b;"></div><span>Лесной мох</span></div>
+                <div class="color-item"><div class="dot" style="background:#a57c5c;"></div><span>Кора дерева</span></div>
+                <div class="color-item"><div class="dot" style="background:#d9c5b3;"></div><span>Песчаный</span></div>
+                <div class="color-item"><div class="dot" style="background:#7f5539;"></div><span>Терракота</span></div>
+            </div>
+        </section>
+
+        <!-- ВАЖНОЕ (анимация) -->
+        <section class="fade-up" style="background: #f0e7df; padding: 40px; border-radius: 60px;">
+            <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; text-align: center;">
+                <div style="flex:1; min-width: 250px;">
+                    <h3 style="font-size: 2rem;">🎁 Подарки</h3>
+                    <p>Самое главное — вы рядом. Но если хотите порадовать, будем рады конверту или бутылочке вина в нашу коллекцию.</p>
+                </div>
+                <div style="flex:1; min-width: 250px;">
+                    <h3 style="font-size: 2rem;">👤 Формат</h3>
+                    <p>Праздник только для взрослых. Пожалуйста, оставьте детей дома и отдохните полностью.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ЧАТ И КОНТАКТЫ (анимация) -->
+        <section class="fade-up" style="text-align: center;">
+            <h2 class="section-title">Чат и контакты</h2>
+            <p>Присоединяйтесь к нашему Telegram-чату, чтобы быть на связи:</p>
+            <a href="#" class="chat-link">📱 telegram-чат Вадим & Полина</a>
+            <p style="margin: 30px 0 10px;">По любым вопросам — к нашей помощнице:</p>
+            <div class="contact-block">
+                <p style="font-size: 2rem; font-weight: 600;">Ольга</p>
+                <p>📞 +7 (912) 345-67-89</p>
+                <p>✉️ @olga_tales</p>
+            </div>
+        </section>
+
+        <!-- ФОРМА ПОДТВЕРЖДЕНИЯ -->
+        <section class="fade-up">
+            <h2 class="section-title">Подтвердите присутствие</h2>
+            <p style="text-align: center; margin-bottom: 30px;">Пожалуйста, ответьте до 01.06.2026</p>
+
+            <form class="rsvp-form" id="rsvpForm">
+                <div class="form-group">
+                    <label>Ваши имена (и спутников, если будете парой) *</label>
+                    <input type="text" id="name" placeholder="Например: Вадим и Полина" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Вы сможете приехать?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="attendance" value="Да" checked> Да, с радостью</label>
+                        <label><input type="radio" name="attendance" value="Нет"> К сожалению, нет</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Предпочтение по горячему</label>
+                    <select id="meal">
+                        <option>Мясное</option>
+                        <option>Рыбное</option>
+                        <option>Овощное/вегетарианское</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Что предпочитаете из алкоголя?</label>
+                    <select id="alcohol">
+                        <option>Красное вино</option>
+                        <option>Белое вино</option>
+                        <option>Шампанское</option>
+                        <option>Крепкое</option>
+                        <option>Не пью алкоголь</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Ваши пожелания или музыкальные предпочтения</label>
+                    <textarea id="wishes" rows="3" placeholder="Напишите здесь..." style="border-radius: 20px;"></textarea>
+                </div>
+
+                <button type="submit" class="btn" id="submitBtn">Отправить подтверждение</button>
+                <p style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: #3a7b5b;" id="formStatus"></p>
+            </form>
+        </section>
+
+        <footer style="text-align: center; padding: 30px 0 20px; color: #aaa;">
+            <p>Вадим & Полина • 03.07.2026 • Таватуй</p>
+        </footer>
+    </div>
+
+    <!-- Подключаем JavaScript -->
+    <script src="scripts.js"></script>
+</body>
+</html>
