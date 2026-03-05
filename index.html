@@ -243,16 +243,28 @@
         .radio-group {
             display: flex;
             gap: 40px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap; /* ← главное: теперь не переносим */
             align-items: center;
+            justify-content: flex-start;
         }
-
+        
         .radio-group label {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             font-weight: 400;
             margin-bottom: 0;
+            white-space: nowrap; /* ← текст не переносится */
+        }
+        
+        /* Для совсем узких экранов (меньше 400px) */
+        @media (max-width: 400px) {
+            .radio-group {
+                gap: 20px;
+            }
+            .radio-group label {
+                font-size: 0.95rem;
+            }
         }
 
         .btn {
@@ -779,3 +791,4 @@
     </script>
 </body>
 </html>
+
