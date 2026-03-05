@@ -40,7 +40,129 @@
             margin-bottom: 80px;
         }
 
-        /* Анимация появления */
+        /* ===== АНИМАЦИЯ КОНВЕРТА ===== */
+        .envelope-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(252, 249, 247, 0.95);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 1.5s ease, backdrop-filter 1.5s ease;
+            pointer-events: none; /* Чтобы контент под ним не кликался */
+        }
+
+        .envelope-overlay.hidden {
+            opacity: 0;
+            backdrop-filter: blur(0);
+            pointer-events: none;
+        }
+
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background: linear-gradient(135deg, #f3e5d7, #e8d5c0);
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            animation: float 3s ease-in-out infinite;
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: auto; /* Чтобы на конверт можно было кликнуть */
+        }
+
+        .envelope.opening {
+            transform: translateY(100vh) rotate(5deg);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: -30px;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: inherit;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .envelope-body {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .envelope-heart {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .envelope-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: #5a3f32;
+            margin-bottom: 10px;
+        }
+
+        .envelope-subtitle {
+            font-size: 1rem;
+            color: #876b55;
+        }
+
+        .envelope-hint {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #876b55;
+            font-size: 0.9rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Затемнение фона при открытии */
+        .content {
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .content.visible {
+            opacity: 1;
+        }
+
+        /* Анимация появления блоков */
         .fade-up {
             opacity: 0;
             transform: translateY(40px);
@@ -510,14 +632,28 @@
             .chat-link { padding: 15px 25px; font-size: 1rem; }
             .contact-phone { font-size: 1.4rem; }
             .guest-card { padding: 20px; }
+            .envelope { width: 250px; height: 170px; }
+            .envelope-title { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
+    <!-- КОНВЕРТ (ПОЛНОЭКРАННЫЙ) -->
+    <div class="envelope-overlay" id="envelopeOverlay">
+        <div class="envelope" id="envelope">
+            <div class="envelope-flap"></div>
+            <div class="envelope-body">
+                <div class="envelope-heart">❤️</div>
+                <div class="envelope-title">Приглашение</div>
+                <div class="envelope-subtitle">Вадим & Полина</div>
+            </div>
+            <div class="envelope-hint">Нажмите, чтобы открыть</div>
+        </div>
+    </div>
 
     <!-- МУЗЫКАЛЬНЫЙ ПЛЕЕР -->
     <div class="music-player" id="musicPlayer">
-        <audio id="bgMusic" loop autoplay playsinline>
+        <audio id="bgMusic" loop>
             <source src="background-music.mp3" type="audio/mpeg">
             Ваш браузер не поддерживает аудио.
         </audio>
@@ -527,162 +663,226 @@
         <div class="player-status" id="musicStatus">Музыка выключена</div>
     </div>
 
-    <!-- ГЕРОЙ -->
-    <section class="hero">
-        <div class="hero-overlay">
-            <h1>ВАДИМ & ПОЛИНА</h1>
-            <div class="date">03.07.2026</div>
-            <div class="timer" id="timer">
-                <div class="timer-item"><span id="days">00</span><span>дней</span></div>
-                <div class="timer-item"><span id="hours">00</span><span>часов</span></div>
-                <div class="timer-item"><span id="minutes">00</span><span>минут</span></div>
-                <div class="timer-item"><span id="seconds">00</span><span>секунд</span></div>
-            </div>
-        </div>
-    </section>
-
-    <div class="container">
-        <!-- ПРИГЛАШЕНИЕ -->
-        <section class="fade-up">
-            <h2 class="section-title">Дорогие гости!</h2>
-            <p style="text-align: center; max-width: 700px; margin: 0 auto; font-size: 1.3rem;">
-                Мы будем счастливы разделить с вами этот день — день, когда мы станем семьёй.<br>
-                Приезжайте разделить нашу радость и тепло!
-            </p>
-        </section>
-
-        <!-- МЕСТО И ВРЕМЯ -->
-        <section class="fade-up">
-            <h2 class="section-title">Место и время</h2>
-            <div class="info-cards">
-                <div class="card">
-                    <h3>📍 Церемония</h3>
-                    <p><strong>16:00</strong><br>Выездная регистрация</p>
-                    <p>Загородный отель «Талес»<br>Ясная ул., 1, посёлок Таватуй</p>
-                    <p class="small-note" style="margin-top: 15px;"><a href="https://yandex.ru/maps/?text=Ясная ул., 1, посёлок Таватуй" target="_blank">Открыть карту →</a></p>
-                </div>
-                <div class="card">
-                    <h3>🥂 Банкет</h3>
-                    <p><strong>17:00</strong><br>Банкетный зал отеля «Талес»</p>
-                    <p>Сбор гостей в <strong>15:30</strong> (welcome-зона)</p>
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <div class="content" id="mainContent">
+        <!-- ГЕРОЙ -->
+        <section class="hero">
+            <div class="hero-overlay">
+                <h1>ВАДИМ & ПОЛИНА</h1>
+                <div class="date">03.07.2026</div>
+                <div class="timer" id="timer">
+                    <div class="timer-item"><span id="days">00</span><span>дней</span></div>
+                    <div class="timer-item"><span id="hours">00</span><span>часов</span></div>
+                    <div class="timer-item"><span id="minutes">00</span><span>минут</span></div>
+                    <div class="timer-item"><span id="seconds">00</span><span>секунд</span></div>
                 </div>
             </div>
         </section>
 
-        <!-- ТАЙМИНГ -->
-        <section class="fade-up">
-            <h2 class="section-title">Программа дня</h2>
-            <div class="schedule">
-                <div class="schedule-item"><span class="schedule-time">15:30</span><span>Сбор гостей, приветственный фуршет</span></div>
-                <div class="schedule-item"><span class="schedule-time">16:00</span><span>Выездная церемония</span></div>
-                <div class="schedule-item"><span class="schedule-time">17:00</span><span>Банкет</span></div>
-                <div class="schedule-item"><span class="schedule-time">23:00</span><span>Завершение вечера</span></div>
-            </div>
-        </section>
-
-        <!-- ДРЕСС-КОД -->
-        <section class="fade-up">
-            <h2 class="section-title">Дресс-код</h2>
-            <p style="text-align: center;">Поддержите цветовую гамму нашей свадьбы — природные, уральские оттенки:</p>
-            <div class="color-dots">
-                <div class="color-item"><div class="dot" style="background:#47634b;"></div><span>Лесной мох</span></div>
-                <div class="color-item"><div class="dot" style="background:#a57c5c;"></div><span>Кора дерева</span></div>
-                <div class="color-item"><div class="dot" style="background:#d9c5b3;"></div><span>Песчаный</span></div>
-                <div class="color-item"><div class="dot" style="background:#7f5539;"></div><span>Терракота</span></div>
-            </div>
-        </section>
-
-        <!-- БЛОК ПРО ЦВЕТЫ -->
-        <section class="fade-up flowers-block">
-            <div class="flowers-icon">🌿🌸</div>
-            <h3 class="flowers-title">О цветах</h3>
-            <p class="flowers-text">
-                Дорогие гости! У нас будет много живых цветов на празднике.<br>
-                Пожалуйста, не дарите букеты — мы не сможем забрать их с собой.<br>
-                <span style="display: block; margin-top: 20px; font-style: italic;">Лучший подарок — ваши улыбки и тепло!</span>
-            </p>
-        </section>
-
-        <!-- ЧАТ И КОНТАКТЫ -->
-        <section class="fade-up chat-section">
-            <h2 class="section-title">Чат и контакты</h2>
-            <p style="font-size: 1.2rem;">Присоединяйтесь к нашему Telegram-чату, чтобы быть на связи:</p>
-            <a href="https://t.me/+97GMs6tI2bpjOTUy" class="chat-link" target="_blank">
-                📱 Вадим & Полина / Telegram-чат
-            </a>
-            
-            <div class="contact-block">
-                <div class="contact-name">Екатерина</div>
-                <div class="contact-role">организатор</div>
-                <p style="margin-bottom: 25px; font-size: 1.1rem;">
-                    Дорогие гости! Если у вас возникли вопросы, пожелания,<br>
-                    или вы подготовили творческие поздравления — свяжитесь с нашим организатором:
+        <div class="container">
+            <!-- ПРИГЛАШЕНИЕ -->
+            <section class="fade-up">
+                <h2 class="section-title">Дорогие гости!</h2>
+                <p style="text-align: center; max-width: 700px; margin: 0 auto; font-size: 1.3rem;">
+                    Мы будем счастливы разделить с вами этот день — день, когда мы станем семьёй.<br>
+                    Приезжайте разделить нашу радость и тепло!
                 </p>
-                <a href="tel:+79630409212" class="contact-phone">8 (963) 040-92-12</a>
-            </div>
-        </section>
+            </section>
 
-        <!-- ФОРМА ПОДТВЕРЖДЕНИЯ -->
-        <section class="fade-up">
-            <h2 class="section-title">Подтвердите присутствие</h2>
-            <p style="text-align: center; margin-bottom: 30px;">Пожалуйста, ответьте до 01.06.2026</p>
-
-            <form class="rsvp-form" id="rsvpForm">
-                <div id="guests-container">
-                    <!-- Первый гость (обязательный) -->
-                    <div class="guest-card" id="guest-1">
-                        <div class="guest-title">
-                            <span>👤 Гость 1</span>
-                        </div>
-                        <div class="form-group">
-                            <label>ФИО *</label>
-                            <input type="text" class="guest-name" placeholder="Например: Вадим Зиновьев" required>
-                        </div>
-                        <div class="form-group">
-                            <label>🍽 Предпочтение по горячему</label>
-                            <select class="guest-meal">
-                                <option>🍗 Курица</option>
-                                <option>🥩 Свинина</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>🥂 Что предпочитаете из алкоголя?</label>
-                            <select class="guest-alcohol">
-                                <option>🍷 Красное вино</option>
-                                <option>🥂 Белое вино</option>
-                                <option>🍾 Шампанское</option>
-                                <option>🥃 Водка</option>
-                                <option>🥃 Виски</option>
-                                <option>🥃 Коньяк</option>
-                                <option>🚫 Не пью алкоголь</option>
-                            </select>
-                        </div>
+            <!-- МЕСТО И ВРЕМЯ -->
+            <section class="fade-up">
+                <h2 class="section-title">Место и время</h2>
+                <div class="info-cards">
+                    <div class="card">
+                        <h3>📍 Церемония</h3>
+                        <p><strong>16:00</strong><br>Выездная регистрация</p>
+                        <p>Загородный отель «Талес»<br>Ясная ул., 1, посёлок Таватуй</p>
+                        <p class="small-note" style="margin-top: 15px;"><a href="https://yandex.ru/maps/?text=Ясная ул., 1, посёлок Таватуй" target="_blank">Открыть карту →</a></p>
+                    </div>
+                    <div class="card">
+                        <h3>🥂 Банкет</h3>
+                        <p><strong>17:00</strong><br>Банкетный зал отеля «Талес»</p>
+                        <p>Сбор гостей в <strong>15:30</strong> (welcome-зона)</p>
                     </div>
                 </div>
+            </section>
 
-                <!-- Кнопка добавления гостя -->
-                <button type="button" class="btn btn-secondary" id="addGuestBtn">➕ Добавить еще гостя</button>
-
-                <!-- Общие пожелания -->
-                <div class="form-group" style="margin-top: 30px;">
-                    <label>💬 Ваши пожелания или музыкальные предпочтения</label>
-                    <textarea id="wishes" rows="3" placeholder="Напишите здесь..." style="border-radius: 20px;"></textarea>
+            <!-- ТАЙМИНГ -->
+            <section class="fade-up">
+                <h2 class="section-title">Программа дня</h2>
+                <div class="schedule">
+                    <div class="schedule-item"><span class="schedule-time">15:30</span><span>Сбор гостей, приветственный фуршет</span></div>
+                    <div class="schedule-item"><span class="schedule-time">16:00</span><span>Выездная церемония</span></div>
+                    <div class="schedule-item"><span class="schedule-time">17:00</span><span>Банкет</span></div>
+                    <div class="schedule-item"><span class="schedule-time">23:00</span><span>Завершение вечера</span></div>
                 </div>
+            </section>
 
-                <button type="submit" class="btn" id="submitBtn">Отправить подтверждение</button>
-                <p style="text-align: center; margin-top: 20px; color: #3a7b5b;" id="formStatus"></p>
-            </form>
-        </section>
+            <!-- ДРЕСС-КОД -->
+            <section class="fade-up">
+                <h2 class="section-title">Дресс-код</h2>
+                <p style="text-align: center;">Поддержите цветовую гамму нашей свадьбы — природные, уральские оттенки:</p>
+                <div class="color-dots">
+                    <div class="color-item"><div class="dot" style="background:#47634b;"></div><span>Лесной мох</span></div>
+                    <div class="color-item"><div class="dot" style="background:#a57c5c;"></div><span>Кора дерева</span></div>
+                    <div class="color-item"><div class="dot" style="background:#d9c5b3;"></div><span>Песчаный</span></div>
+                    <div class="color-item"><div class="dot" style="background:#7f5539;"></div><span>Терракота</span></div>
+                </div>
+            </section>
 
-        <footer style="text-align: center; padding: 30px 0 20px; color: #aaa;">
-            <p>Вадим & Полина • 03.07.2026 • Таватуй</p>
-        </footer>
+            <!-- БЛОК ПРО ЦВЕТЫ -->
+            <section class="fade-up flowers-block">
+                <div class="flowers-icon">🌿🌸</div>
+                <h3 class="flowers-title">О цветах</h3>
+                <p class="flowers-text">
+                    Дорогие гости! У нас будет много живых цветов на празднике.<br>
+                    Пожалуйста, не дарите букеты — мы не сможем забрать их с собой.<br>
+                    <span style="display: block; margin-top: 20px; font-style: italic;">Лучший подарок — ваши улыбки и тепло!</span>
+                </p>
+            </section>
+
+            <!-- ЧАТ И КОНТАКТЫ -->
+            <section class="fade-up chat-section">
+                <h2 class="section-title">Чат и контакты</h2>
+                <p style="font-size: 1.2rem;">Присоединяйтесь к нашему Telegram-чату, чтобы быть на связи:</p>
+                <a href="https://t.me/+97GMs6tI2bpjOTUy" class="chat-link" target="_blank">
+                    📱 Вадим & Полина / Telegram-чат
+                </a>
+                
+                <div class="contact-block">
+                    <div class="contact-name">Екатерина</div>
+                    <div class="contact-role">организатор</div>
+                    <p style="margin-bottom: 25px; font-size: 1.1rem;">
+                        Дорогие гости! Если у вас возникли вопросы, пожелания,<br>
+                        или вы подготовили творческие поздравления — свяжитесь с нашим организатором:
+                    </p>
+                    <a href="tel:+79630409212" class="contact-phone">8 (963) 040-92-12</a>
+                </div>
+            </section>
+
+            <!-- ФОРМА ПОДТВЕРЖДЕНИЯ -->
+            <section class="fade-up">
+                <h2 class="section-title">Подтвердите присутствие</h2>
+                <p style="text-align: center; margin-bottom: 30px;">Пожалуйста, ответьте до 01.06.2026</p>
+
+                <form class="rsvp-form" id="rsvpForm">
+                    <div id="guests-container">
+                        <!-- Первый гость (обязательный) -->
+                        <div class="guest-card" id="guest-1">
+                            <div class="guest-title">
+                                <span>👤 Гость 1</span>
+                            </div>
+                            <div class="form-group">
+                                <label>ФИО *</label>
+                                <input type="text" class="guest-name" placeholder="Например: Вадим Зиновьев" required>
+                            </div>
+                            <div class="form-group">
+                                <label>🍽 Предпочтение по горячему</label>
+                                <select class="guest-meal">
+                                    <option>🍗 Курица</option>
+                                    <option>🥩 Свинина</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>🥂 Что предпочитаете из алкоголя?</label>
+                                <select class="guest-alcohol">
+                                    <option>🍷 Красное вино</option>
+                                    <option>🥂 Белое вино</option>
+                                    <option>🍾 Шампанское</option>
+                                    <option>🥃 Водка</option>
+                                    <option>🥃 Виски</option>
+                                    <option>🥃 Коньяк</option>
+                                    <option>🚫 Не пью алкоголь</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Кнопка добавления гостя -->
+                    <button type="button" class="btn btn-secondary" id="addGuestBtn">➕ Добавить еще гостя</button>
+
+                    <!-- Общие пожелания -->
+                    <div class="form-group" style="margin-top: 30px;">
+                        <label>💬 Ваши пожелания или музыкальные предпочтения</label>
+                        <textarea id="wishes" rows="3" placeholder="Напишите здесь..." style="border-radius: 20px;"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn" id="submitBtn">Отправить подтверждение</button>
+                    <p style="text-align: center; margin-top: 20px; color: #3a7b5b;" id="formStatus"></p>
+                </form>
+            </section>
+
+            <footer style="text-align: center; padding: 30px 0 20px; color: #aaa;">
+                <p>Вадим & Полина • 03.07.2026 • Таватуй</p>
+            </footer>
+        </div>
     </div>
 
     <script>
         // ===== СКРИПТЫ =====
         
-        // 1. ТАЙМЕР
+        // 1. АНИМАЦИЯ КОНВЕРТА И МУЗЫКА
+        const envelope = document.getElementById('envelope');
+        const envelopeOverlay = document.getElementById('envelopeOverlay');
+        const mainContent = document.getElementById('mainContent');
+        const audio = document.getElementById('bgMusic');
+        const playBtn = document.getElementById('playPauseBtn');
+        const musicStatus = document.getElementById('musicStatus');
+        let isPlaying = false;
+
+        // Обработчик клика по конверту
+        envelope.addEventListener('click', function() {
+            // Анимация конверта
+            envelope.classList.add('opening');
+            
+            // Ждём окончания анимации конверта
+            setTimeout(() => {
+                envelopeOverlay.classList.add('hidden');
+                mainContent.classList.add('visible');
+                
+                // Запускаем музыку
+                audio.play()
+                    .then(() => {
+                        isPlaying = true;
+                        musicStatus.textContent = 'Сейчас играет';
+                        playBtn.classList.add('playing');
+                    })
+                    .catch(error => {
+                        console.log('Не удалось включить музыку:', error);
+                    });
+            }, 1000); // Время анимации конверта
+        });
+
+        // Кнопка плеера (пауза/плей)
+        playBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                musicStatus.textContent = 'Музыка выключена';
+                playBtn.classList.remove('playing');
+            } else {
+                audio.play()
+                    .then(() => {
+                        isPlaying = true;
+                        musicStatus.textContent = 'Сейчас играет';
+                        playBtn.classList.add('playing');
+                    })
+                    .catch(error => {
+                        console.log('Ошибка:', error);
+                        musicStatus.textContent = 'Ошибка';
+                    });
+            }
+        });
+
+        audio.addEventListener('ended', function() {
+            isPlaying = false;
+            playBtn.classList.remove('playing');
+            musicStatus.textContent = 'Музыка выключена';
+        });
+
+        // 2. ТАЙМЕР
         const weddingDate = new Date(2026, 6, 3, 16, 0);
 
         function updateTimer() {
@@ -710,7 +910,7 @@
         updateTimer();
         setInterval(updateTimer, 1000);
 
-        // 2. АНИМАЦИЯ ПОЯВЛЕНИЯ
+        // 3. АНИМАЦИЯ ПОЯВЛЕНИЯ БЛОКОВ
         const fadeElements = document.querySelectorAll('.fade-up');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -721,56 +921,6 @@
         }, { threshold: 0.2 });
 
         fadeElements.forEach(el => observer.observe(el));
-
-        // 3. МУЗЫКАЛЬНЫЙ ПЛЕЕР
-        const audio = document.getElementById('bgMusic');
-        const playBtn = document.getElementById('playPauseBtn');
-        const musicStatus = document.getElementById('musicStatus');
-        let isPlaying = false;
-
-        if (audio) {
-            let playPromise = audio.play();
-            
-            if (playPromise !== undefined) {
-                playPromise
-                    .then(() => {
-                        isPlaying = true;
-                        musicStatus.textContent = 'Сейчас играет';
-                        playBtn.classList.add('playing');
-                    })
-                    .catch(error => {
-                        console.log('Автовоспроизведение не сработало');
-                        musicStatus.textContent = 'Нажмите, чтобы включить музыку';
-                    });
-            }
-
-            playBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                if (isPlaying) {
-                    audio.pause();
-                    musicStatus.textContent = 'Музыка выключена';
-                    playBtn.classList.remove('playing');
-                } else {
-                    audio.play()
-                        .then(() => {
-                            musicStatus.textContent = 'Сейчас играет';
-                            playBtn.classList.add('playing');
-                        })
-                        .catch(error => {
-                            console.log('Ошибка:', error);
-                            musicStatus.textContent = 'Ошибка воспроизведения';
-                        });
-                }
-                isPlaying = !isPlaying;
-            });
-
-            audio.addEventListener('ended', function() {
-                isPlaying = false;
-                playBtn.classList.remove('playing');
-                musicStatus.textContent = 'Музыка выключена';
-            });
-        }
 
         // 4. ДИНАМИЧЕСКОЕ ДОБАВЛЕНИЕ ГОСТЕЙ
         let guestCount = 1;
