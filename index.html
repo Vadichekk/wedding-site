@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Вадим и Полина | Свадьба 03.07.2026</title>
     <!-- Шрифты Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -203,7 +203,7 @@
 
         /* Форма */
         .rsvp-form {
-            max-width: 700px;
+            max-width: 800px;
             margin: 0 auto;
             background: white;
             padding: 50px;
@@ -211,26 +211,68 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.05);
         }
 
+        .guest-card {
+            background: #fbf7f4;
+            padding: 25px;
+            border-radius: 30px;
+            margin-bottom: 25px;
+            border: 2px solid #f0e4dc;
+            transition: all 0.3s;
+        }
+
+        .guest-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .guest-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #876b55;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .remove-guest {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #b58b70;
+            padding: 0 10px;
+            transition: 0.2s;
+        }
+
+        .remove-guest:hover {
+            color: #6b5240;
+            transform: scale(1.1);
+        }
+
         .form-group {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
         }
 
         label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 500;
             color: #3a3a3a;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         input, select, textarea {
             width: 100%;
-            padding: 15px 20px;
+            padding: 12px 18px;
             border: 2px solid #f0e4dc;
-            border-radius: 60px;
+            border-radius: 50px;
             font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            background: #fbf7f4;
+            font-size: 0.95rem;
+            background: white;
             transition: 0.2s;
         }
 
@@ -242,28 +284,26 @@
 
         .radio-group {
             display: flex;
-            gap: 40px;
-            flex-wrap: nowrap; /* ← главное: теперь не переносим */
+            gap: 30px;
+            flex-wrap: wrap;
             align-items: center;
-            justify-content: flex-start;
         }
-        
+
         .radio-group label {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             font-weight: 400;
             margin-bottom: 0;
-            white-space: nowrap; /* ← текст не переносится */
+            white-space: nowrap;
         }
-        
-        /* Для совсем узких экранов (меньше 400px) */
+
         @media (max-width: 400px) {
             .radio-group {
-                gap: 20px;
+                gap: 15px;
             }
             .radio-group label {
-                font-size: 0.95rem;
+                font-size: 0.9rem;
             }
         }
 
@@ -271,18 +311,28 @@
             background: #876b55;
             color: white;
             border: none;
-            padding: 18px 40px;
-            font-size: 1.2rem;
+            padding: 16px 30px;
+            font-size: 1.1rem;
             border-radius: 60px;
             cursor: pointer;
-            width: 100%;
             font-weight: 600;
             transition: 0.3s;
+            width: 100%;
         }
 
         .btn:hover {
             background: #6b5240;
             transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #e1d3cb;
+            color: #4a3a32;
+            margin-top: 20px;
+        }
+
+        .btn-secondary:hover {
+            background: #d4c0b5;
         }
 
         /* Чат и контакты */
@@ -454,12 +504,12 @@
             .music-player { bottom: 20px; right: 20px; }
             .player-button { width: 50px; height: 50px; }
             .music-icon { font-size: 24px; }
-            .radio-group { gap: 20px; }
             .flowers-block { padding: 30px 20px; }
             .flowers-title { font-size: 2rem; }
             .flowers-text { font-size: 1.1rem; }
             .chat-link { padding: 15px 25px; font-size: 1rem; }
             .contact-phone { font-size: 1.4rem; }
+            .guest-card { padding: 20px; }
         }
     </style>
 </head>
@@ -542,14 +592,14 @@
             </div>
         </section>
 
-        <!-- БЛОК ПРО ЦВЕТЫ (вместо подарков) -->
+        <!-- БЛОК ПРО ЦВЕТЫ -->
         <section class="fade-up flowers-block">
             <div class="flowers-icon">🌿🌸</div>
             <h3 class="flowers-title">О цветах</h3>
             <p class="flowers-text">
                 Дорогие гости! У нас будет много живых цветов на празднике.<br>
                 Пожалуйста, не дарите букеты — мы не сможем забрать их с собой.<br>
-                <span style="font-size: 1.1rem; display: block; margin-top: 20px;">Лучший подарок для нас — ваши улыбки и хорошее настроение!</span>
+                <span style="display: block; margin-top: 20px; font-style: italic;">Лучший подарок — ваши улыбки и тепло!</span>
             </p>
         </section>
 
@@ -578,48 +628,44 @@
             <p style="text-align: center; margin-bottom: 30px;">Пожалуйста, ответьте до 01.06.2026</p>
 
             <form class="rsvp-form" id="rsvpForm">
-                <!-- Два отдельных поля для имен -->
-                <div class="form-group">
-                    <label>Ваше имя и фамилия *</label>
-                    <input type="text" id="name1" placeholder="Например: Вадим Петров" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Имя и фамилия вашей половинки (если идёте вдвоём)</label>
-                    <input type="text" id="name2" placeholder="Например: Полина Иванова">
-                </div>
-
-                <div class="form-group">
-                    <label>Вы сможете приехать?</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="attendance" value="Да" checked> Да, с радостью</label>
-                        <label><input type="radio" name="attendance" value="Нет"> К сожалению, нет</label>
+                <div id="guests-container">
+                    <!-- Первый гость (обязательный) -->
+                    <div class="guest-card" id="guest-1">
+                        <div class="guest-title">
+                            <span>👤 Гость 1</span>
+                        </div>
+                        <div class="form-group">
+                            <label>ФИО *</label>
+                            <input type="text" class="guest-name" placeholder="Например: Вадим Зиновьев" required>
+                        </div>
+                        <div class="form-group">
+                            <label>🍽 Предпочтение по горячему</label>
+                            <select class="guest-meal">
+                                <option>🍗 Курица</option>
+                                <option>🥩 Свинина</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>🥂 Что предпочитаете из алкоголя?</label>
+                            <select class="guest-alcohol">
+                                <option>🍷 Красное вино</option>
+                                <option>🥂 Белое вино</option>
+                                <option>🍾 Шампанское</option>
+                                <option>🥃 Водка</option>
+                                <option>🥃 Виски</option>
+                                <option>🥃 Коньяк</option>
+                                <option>🚫 Не пью алкоголь</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Предпочтение по горячему</label>
-                    <select id="meal">
-                        <option>Курица</option>
-                        <option>Свинина</option>
-                    </select>
-                </div>
+                <!-- Кнопка добавления гостя -->
+                <button type="button" class="btn btn-secondary" id="addGuestBtn">➕ Добавить еще гостя</button>
 
-                <div class="form-group">
-                    <label>Что предпочитаете из алкоголя?</label>
-                    <select id="alcohol">
-                        <option>Красное вино</option>
-                        <option>Белое вино</option>
-                        <option>Шампанское</option>
-                        <option>Водка</option>
-                        <option>Виски</option>
-                        <option>Коньяк</option>
-                        <option>Не пью алкоголь</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Ваши пожелания или музыкальные предпочтения</label>
+                <!-- Общие пожелания -->
+                <div class="form-group" style="margin-top: 30px;">
+                    <label>💬 Ваши пожелания или музыкальные предпочтения</label>
                     <textarea id="wishes" rows="3" placeholder="Напишите здесь..." style="border-radius: 20px;"></textarea>
                 </div>
 
@@ -676,32 +722,28 @@
 
         fadeElements.forEach(el => observer.observe(el));
 
-        // 3. МУЗЫКАЛЬНЫЙ ПЛЕЕР (автовоспроизведение с обработкой ошибок)
+        // 3. МУЗЫКАЛЬНЫЙ ПЛЕЕР
         const audio = document.getElementById('bgMusic');
         const playBtn = document.getElementById('playPauseBtn');
         const musicStatus = document.getElementById('musicStatus');
         let isPlaying = false;
 
         if (audio) {
-            // Пытаемся включить музыку сразу
             let playPromise = audio.play();
             
             if (playPromise !== undefined) {
                 playPromise
                     .then(() => {
-                        // Автовоспроизведение сработало
                         isPlaying = true;
                         musicStatus.textContent = 'Сейчас играет';
                         playBtn.classList.add('playing');
                     })
                     .catch(error => {
-                        // Автовоспроизведение заблокировано браузером
-                        console.log('Автовоспроизведение не сработало, ждём клик');
+                        console.log('Автовоспроизведение не сработало');
                         musicStatus.textContent = 'Нажмите, чтобы включить музыку';
                     });
             }
 
-            // Обработчик клика по кнопке
             playBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 
@@ -730,7 +772,49 @@
             });
         }
 
-        // 4. ОТПРАВКА ФОРМЫ В ГУГЛ-ТАБЛИЦУ
+        // 4. ДИНАМИЧЕСКОЕ ДОБАВЛЕНИЕ ГОСТЕЙ
+        let guestCount = 1;
+        const container = document.getElementById('guests-container');
+        const addBtn = document.getElementById('addGuestBtn');
+
+        addBtn.addEventListener('click', function() {
+            guestCount++;
+            const newGuest = document.createElement('div');
+            newGuest.className = 'guest-card';
+            newGuest.id = `guest-${guestCount}`;
+            newGuest.innerHTML = `
+                <div class="guest-title">
+                    <span>👤 Гость ${guestCount}</span>
+                    <button type="button" class="remove-guest" onclick="this.closest('.guest-card').remove()">✕</button>
+                </div>
+                <div class="form-group">
+                    <label>ФИО</label>
+                    <input type="text" class="guest-name" placeholder="Например: Полина Храмцова">
+                </div>
+                <div class="form-group">
+                    <label>🍽 Предпочтение по горячему</label>
+                    <select class="guest-meal">
+                        <option>🍗 Курица</option>
+                        <option>🥩 Свинина</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>🥂 Что предпочитаете из алкоголя?</label>
+                    <select class="guest-alcohol">
+                        <option>🍷 Красное вино</option>
+                        <option>🥂 Белое вино</option>
+                        <option>🍾 Шампанское</option>
+                        <option>🥃 Водка</option>
+                        <option>🥃 Виски</option>
+                        <option>🥃 Коньяк</option>
+                        <option>🚫 Не пью алкоголь</option>
+                    </select>
+                </div>
+            `;
+            container.appendChild(newGuest);
+        });
+
+        // 5. ОТПРАВКА В ГУГЛ-ТАБЛИЦУ
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzVJkHZ3WUuLGjZJ9zQ_xUJXa6nPxL05fS2D3hzGj3p8XuTtD0xFjNCqcgRzcruKol2Va4/exec';
 
         document.getElementById('rsvpForm')?.addEventListener('submit', async function(e) {
@@ -738,21 +822,37 @@
             const statusEl = document.getElementById('formStatus');
             const submitBtn = document.getElementById('submitBtn');
             
-            const name1 = document.getElementById('name1').value.trim();
-            const name2 = document.getElementById('name2').value.trim();
-            
-            if (!name1) {
+            // Собираем всех гостей
+            const guestCards = document.querySelectorAll('.guest-card');
+            const guests = [];
+            let hasError = false;
+
+            guestCards.forEach((card, index) => {
+                const name = card.querySelector('.guest-name').value.trim();
+                // Для первого гостя имя обязательно
+                if (index === 0 && !name) {
+                    hasError = true;
+                    return;
+                }
+                if (name) {
+                    const meal = card.querySelector('.guest-meal').value;
+                    const alcohol = card.querySelector('.guest-alcohol').value;
+                    guests.push(`${name} (${meal}/${alcohol})`);
+                }
+            });
+
+            if (hasError) {
                 statusEl.style.color = 'red';
-                statusEl.innerText = 'Пожалуйста, введите ваше имя';
+                statusEl.innerText = 'Пожалуйста, введите имя первого гостя';
                 return;
             }
 
-            // Объединяем имена для отправки
-            const fullName = name2 ? `${name1} и ${name2}` : name1;
-            
-            const attendance = document.querySelector('input[name="attendance"]:checked').value;
-            const meal = document.getElementById('meal').value;
-            const alcohol = document.getElementById('alcohol').value;
+            if (guests.length === 0) {
+                statusEl.style.color = 'red';
+                statusEl.innerText = 'Добавьте хотя бы одного гостя';
+                return;
+            }
+
             const wishes = document.getElementById('wishes').value;
 
             submitBtn.disabled = true;
@@ -767,17 +867,20 @@
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: new URLSearchParams({
                         sheetName: 'Лист5',
-                        name: fullName,
-                        attendance: attendance,
-                        meal: meal,
-                        alcohol: alcohol,
+                        guests: guests.join('; '),
                         wishes: wishes,
                         timestamp: new Date().toLocaleString('ru-RU')
                     })
                 });
 
                 statusEl.innerText = '✓ Спасибо! Ваш ответ записан.';
-                document.getElementById('rsvpForm').reset();
+                // Очищаем форму
+                document.querySelectorAll('.guest-card').forEach((card, index) => {
+                    if (index > 0) card.remove();
+                });
+                document.getElementById('guest-1').querySelector('.guest-name').value = '';
+                document.getElementById('wishes').value = '';
+                guestCount = 1;
             } catch (error) {
                 console.error('Ошибка:', error);
                 statusEl.style.color = 'red';
@@ -791,4 +894,3 @@
     </script>
 </body>
 </html>
-
